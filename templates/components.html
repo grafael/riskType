@@ -1,0 +1,33 @@
+<template id="britecore-component-template">
+<v-layout>
+        <v-flex sm11 offset-sm1>
+            <v-flex sm5 v-if="type === 'Text'">
+                <v-text-field :label="label" :required="required"></v-text-field>
+            </v-flex>
+
+            <v-flex sm5 v-else-if="type === 'Date'">
+                <v-dialog persistent lazy v-model="modal" full-width width="290px" >
+                    <v-text-field slot="activator" :label="label" v-model="date" prepend-icon="event" readonly :required="required"></v-text-field>
+                    <v-date-picker v-model="date" scrollable actions>
+                    <template slot-scope="{ save, cancel }">
+                        <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn flat color="primary" @click="cancel">Cancel</v-btn>
+                        <v-btn flat color="primary" @click="save">OK</v-btn>
+                        </v-card-actions>
+                    </template>
+                    </v-date-picker>
+                </v-dialog>
+            </v-flex>
+
+            <v-flex sm5 v-else-if="type === 'Number'">
+                <v-text-field :label="label" :rules="numberRules" :required="required"></v-text-field>
+            </v-flex>
+
+            <v-flex sm5 v-else-if="type === 'Enum'">
+                    <v-select v-bind:items="val" v-model="en" :label="label" bottom :required="required"></v-select>
+            </v-flex>
+        </v-flex>
+    </v-layout>
+</template>
+

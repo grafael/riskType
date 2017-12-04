@@ -1,0 +1,48 @@
+{% extends "layout.html" %} {% block script %}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+{% endblock %} {% block page_content %} {% include "components.html" %}
+<div id="app_risktype">
+    <v-app>
+        <v-content>
+            <v-container>
+                <v-card-title class="blue white--text">
+                        <span class="headline">Britecore Risk Types</span>
+                 </v-card-title>
+                <v-data-table v-bind:headers="headers" :items="riskTypes" hide-actions class="elevation-1">
+                        <template slot="items" slot-scope="props">
+                                <td>[[ props.item.name ]]</td>
+                                <td class="text-xs-right">
+                                        <v-btn color="primary" @click="showForm(props.item)">View</v-btn>
+                                </td>
+
+                                <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition" :overlay=false scrollable>
+                                        <v-card>
+                                                <v-toolbar  dark class="primary">
+                                                        <v-btn icon @click.native="hideForm()" dark>
+                                                                <v-icon>close</v-icon>
+                                                        </v-btn>
+                                                        <v-toolbar-title>[[ selected.name ]]</v-toolbar-title>
+                                                </v-toolbar>
+                                        <v-form>
+                                                <div v-for="field in selected.fields">
+                                                        <britecore-component 
+                                                                :label="field.label" 
+                                                                :val="field.val" 
+                                                                :type="field.type" 
+                                                                :required="field.required">
+                                                        </britecore-component>
+                                                </div>
+                                        </v-form>
+                                        </v-card>
+                                </v-dialog>        
+                        </template>
+                </v-data-table>
+            </v-container>
+        </v-content>
+    </v-app>
+</div>
+
+
+<script src="{{ url_for('static', filename='js/components.js') }}"></script>
+<script src="{{ url_for('static', filename='js/risktype.js') }}"></script>
+{% endblock %}
