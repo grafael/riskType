@@ -30,6 +30,7 @@ def add_risk():
 
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
+db.init_app(app)
+
 if __name__ == '__main__':
-    db.init_app(app)
     app.run(debug=True)
